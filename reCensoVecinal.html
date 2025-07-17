@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Censo Vecinal Villa René Olivares</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.8s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .slide:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .slide:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .slide:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .slide:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 2.2em;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #dee2e6;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .key-findings {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #f39c12;
+        }
+
+        .key-findings h3 {
+            color: #d35400;
+            border-left: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+
+        .findings-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .findings-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .findings-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .section-intro {
+            text-align: center;
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .category-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f1f3f4 0%, #e8eaf6 100%);
+            border-radius: 15px;
+            border: 1px solid #dadce0;
+        }
+
+        .category-title {
+            color: #4a5568;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            transition: width 0.6s ease;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .recommendations {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #17a2b8;
+        }
+
+        .recommendations h3 {
+            color: #0c5460;
+            border-left: none;
+            padding-left: 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #eef7ff;
+            font-size: 0.9em;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 12px;
+            /* Más arriba */
+            right: 12px;
+            /* Más pegado al borde */
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            /* Más compacto */
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                margin: 20px 0;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 2em;
+            }
+        }
+
+        .progress-fill.too-small {
+            position: relative;
+        }
+
+        .progress-fill.too-small .progress-text {
+            position: absolute;
+            left: 105%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #dc3545;
+            /* rojo */
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+
+
+        /* Animación en hover para barras de progreso */
+        .progress-fill {
+            transition: width 0.6s ease;
+
+            transform-origin: left;
+
+        }
+
+        .progress-bar:hover .progress-fill {
+            transition: width 0.6s ease;
+            transform: scaleX(1);
+        }
+
+        /* Sombra opcional al pasar el mouse */
+        .progress-bar:hover {
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Mejora visual al hacer hover en cards y secciones */
+        .stat-card:hover,
+        .category-section:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover .stat-number,
+        .category-section:hover .progress-text {
+            color: #222;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            transition: color 0.3s ease;
+        }
+
+        .stat-card:hover .stat-label {
+            color: #495057;
+            transition: color 0.3s ease;
+        }
+
+        .category-section:hover .category-title {
+            color: #2c3e50;
+            transition: color 0.3s ease;
+        }
+
+        /* Animación suave de entrada para todas las barras */
+        .progress-fill {
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: fadeInProgress 0.8s ease forwards;
+        }
+
+        @keyframes fadeInProgress {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Efecto de entrada para tarjetas informativas */
+        .key-findings,
+        .recommendations {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efecto visual al pasar el mouse */
+        .key-findings:hover,
+        .recommendations:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            filter: brightness(1.02);
+        }
+
+        /* Agregar un pequeño ícono animado al inicio de cada item */
+        .findings-list li::before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animación de ícono al pasar el mouse */
+        .findings-list li:hover::before {
+            transform: scale(1.3) rotate(-5deg);
+        }
+
+        /* Borde dinámico de las tarjetas en hover */
+        .key-findings:hover,
+        .recommendations:hover {
+            border-left: 6px solid #1abc9c;
+            border-right: 6px solid #1abc9c;
+        }
+
+        .resaltado-importante {
+            border: 2px solid #dc3545;
+            border-left: 6px solid #dc3545;
+            background-color: #fff3cd;
+            animation: parpadeo 1.2s ease-in-out infinite alternate;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes parpadeo {
+            0% {
+                box-shadow: 0 0 0px rgba(220, 53, 69, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(220, 53, 69, 0.6);
+            }
+
+
+        }
+
+        .card:hover {
+            font-weight: bold;
+        }
+
+        .card {
+            transition: font-weight 0.2s ease-in-out;
+        }
+
+        .key-findings:hover .findings-list li,
+        .recommendations:hover .findings-list li {
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.7em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            h3 {
+                font-size: 1.1em;
+            }
+
+            .slide {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 1.5em;
+            }
+
+            .presentation-container {
+                padding: 10px;
+            }
+
+            .resaltado-importante {
+                font-size: 0.9em;
+                padding: 0.8rem;
+            }
+
+            .progress-text {
+                font-size: 0.75em;
+            }
+
+            .findings-list li {
+                font-size: 1em;
+            }
+
+            .slide-number {
+                top: 8px;
+                right: 8px;
+                padding: 4px 10px;
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Portada -->
+        <div class="slide">
+            <div class="slide-number">1 / 6</div>
+            <h1>Censo Vecinal</h1>
+            <h2 style="color: #667eea; margin-top: 30px;">Villa René Olivares</h2>
+            <div style="text-align: center; margin-top: 50px;">
+                <div style="font-size: 1.5em; color: #6c757d; margin-bottom: 20px;">
+                    Resultados y Análisis
+                </div>
+                <div style="font-size: 1.2em; color: #adb5bd;">
+                    73 Hogares • 166 Personas Mayores de 14 Años
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2: Información Demográfica -->
+        <div class="slide">
+            <div class="slide-number">2 / 6</div>
+            <h2>Información Demográfica</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">73</div>
+                    <div class="stat-label">Hogares Encuestados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">166</div>
+                    <div class="stat-label">Personas Mayores de 14 Años</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">49.3%</div>
+                    <div class="stat-label">Tienen Mascotas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">82.2%</div>
+                    <div class="stat-label">Propietarios</div>
+                </div>
+            </div>
+            <div class="key-findings">
+                <h3>Hallazgos Clave</h3>
+                <ul class="findings-list">
+                    <li>166 personas mayores de 14 años en 73 hogares (promedio 2.3 personas por hogar)</li>
+                    <li>Cerca de la mitad de hogares con mascotas (49.3%) señala la importancia de fomentar la tenencia
+                        responsable en la comunidad.</li>
+                    <li>Alto porcentaje de propietarios (82.2%) sugiere estabilidad y compromiso con la comunidad</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 3: Salud y Bienestar -->
+        <div class="slide">
+            <div class="slide-number">3 / 6</div>
+            <h2>Salud y Bienestar</h2>
+            <div class="category-section">
+                <div class="category-title">Condiciones Crónicas de Salud</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;">
+                        <div class="progress-text">40% Sí</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"
+                        style="width: 60%; background: linear-gradient(90deg, #28a745, #20c997);">
+                        <div class="progress-text">60% No</div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-section">
+                <div class="category-title">Servicios Profesionales Disponibles</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 76.7%;">
+                        <div class="progress-text">76.7% Dispuestos</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"
+                        style="width: 33.3%; background: linear-gradient(90deg, #ffc107, #fd7e14);">
+                        <div class="progress-text">23.3% No disponibles</div>
+                    </div>
+                </div>
+            </div>
+            <div class="recommendations">
+                <h3>Recomendaciones</h3>
+                <ul class="findings-list">
+                    <li>Crear un registro de profesionales disponibles para emergencias</li>
+                    <li>Organizar charlas de salud preventiva para condiciones crónicas</li>
+                    <li>Establecer red de apoyo entre vecinos para temas de salud</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 4: Seguridad -->
+        <div class="slide">
+            <div class="slide-number">4 / 6</div>
+            <h2>Seguridad y Vigilancia</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">86.3%</div>
+                    <div class="stat-label">Se Sienten Seguros</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">27.4%</div>
+                    <div class="stat-label">Participan en Vigilancia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">74%</div>
+                    <div class="stat-label">Dispuestos a Alertas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98.6%</div>
+                    <div class="stat-label">Apoyan Portones</div>
+                </div>
+            </div>
+            <div class="category-section">
+                <div class="category-title">Instalación de Portones</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 98.6%;">
+                        <div class="progress-text">98.6% A Favor</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill too-small"
+                        style="width: 1.4%; background: linear-gradient(90deg, #dc3545, #e74c3c);">
+                        <div class="progress-text">1.4% En Contra</div>
+                    </div>
+                </div>
+                <div class="resaltado-importante">
+                    <strong>Observación:</strong> La persona en contra expresa preocupación por la pérdida de espacio
+                    frontal en casas de esquina debido a la apertura hacia adentro de los portones.
+                </div>
+            </div>
+            <div class="key-findings">
+                <h3>Oportunidades de Mejora</h3>
+                <ul class="findings-list">
+                    <li>Incrementar participación en grupos de vigilancia vecinal</li>
+                    <li>Implementar sistema de alertas WhatsApp (alta aceptación)</li>
+                    <li>Implementar portones (apoyo casi unánime del 98.6%)</li>
+                    <li>Resolver inquietud sobre portones: casas de esquina perderían espacio frontal</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 5: Cohesión Social -->
+        <div class="slide">
+            <div class="slide-number">5 / 6</div>
+            <h2>Cohesión Social y Participación</h2>
+            <div class="category-section">
+                <div class="category-title">Conocimiento de Vecinos</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 74%;">
+                        <div class="progress-text">74% Conocen Vecinos</div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-section">
+                <div class="category-title">Participación en Actividades</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;">
+                        <div class="progress-text">65% Interesados</div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-section">
+                <div class="category-title">Creación de Comité Vecinal</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 68.5%;">
+                        <div class="progress-text">68.5% A Favor</div>
+                    </div>
+                </div>
+            </div>
+            <div class="category-section">
+                <div class="category-title">Disposición a Asumir Cargos</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 45%;">
+                        <div class="progress-text">45% Dispuestos</div>
+                    </div>
+                </div>
+            </div>
+            <div class="recommendations">
+                <h3>Fortalezas Identificadas</h3>
+                <ul class="findings-list">
+                    <li>Buena relación entre vecinos (74% se conocen)</li>
+                    <li>Alto interés en participar en actividades comunitarias</li>
+                    <li>Apoyo mayoritario para crear estructura organizacional formal (68.5%)</li>
+                    <li>Excelente disponibilidad de profesionales (76.7%)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Reclamos e Inquietudes -->
+        <div class="slide">
+            <div class="slide-number">6 / 7</div>
+            <h2>Reclamos e Inquietudes de Vecinos</h2>
+
+            <div class="key-findings">
+                <h3>Principales Temas Mencionados</h3>
+                <ul class="findings-list">
+                    <li>Exceso de ruido por música a altas horas durante fines de semana</li>
+                    <li>Mascotas sin supervisión o sin correa en espacios comunes</li>
+                    <li>Solicitudes para fortalecer la seguridad con caseta de vigilancia</li>
+                    <li>Preocupación por olores asociados al consumo de marihuana</li>
+                    <li>Necesidad de promover la tenencia responsable de mascotas</li>
+                    <li>Disconformidad de vecinos que viven en avenida con el financiamiento de portones</li>
+                </ul>
+            </div>
+
+            <div class="recommendations">
+                <h3>Propuestas y Acciones Sugeridas</h3>
+                <ul class="findings-list">
+                    <li>Establecer horarios razonables para actividades con música</li>
+                    <li>Campañas informativas sobre convivencia y mascotas</li>
+                    <li>Evaluar instalación de caseta de control con turnos rotativos o personal fijo</li>
+                    <li>Crear un canal anónimo para reportar situaciones que afecten la convivencia</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 6: Conclusiones -->
+        <div class="slide">
+            <div class="slide-number">7 / 7</div>
+            <h2>Conclusiones y Próximos Pasos</h2>
+            <div class="key-findings">
+                <h3>Fortalezas de la Comunidad</h3>
+                <ul class="findings-list">
+                    <li>Comunidad cohesionada con buena relación entre vecinos</li>
+                    <li>Mayoría de propietarios comprometidos con el lugar</li>
+                    <li>Interés significativo en organizarse formalmente</li>
+                    <li>Disponibilidad de profesionales para apoyo comunitario</li>
+                </ul>
+            </div>
+            <div class="recommendations">
+                <h3>Acciones Prioritarias</h3>
+                <ul class="findings-list">
+                    <li>Formar Comité Vecinal con 68.5% de apoyo ciudadano</li>
+                    <li>Implementar sistema de alertas vecinales vía WhatsApp</li>
+                    <li>Crear registro de profesionales disponibles</li>
+                    <li>Implementar portones (apoyo casi unánime del 98.6%)</li>
+                    <li>Evaluar diseño de portones que no afecte espacio frontal de casas de esquina</li>
+                    <li>Organizar actividades comunitarias regulares</li>
+                </ul>
+            </div>
+            <div
+                style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 15px;">
+                <h3 style="color: #1976d2; margin-bottom: 15px;">¡Gracias por su participación!</h3>
+                <p style="font-size: 1.1em; color: #424242;">
+                    Villa René Olivares cuenta con una base sólida para el desarrollo comunitario
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Censo Vecinal Villa René Olivares - 2025</p>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.progress-fill').forEach(fill => {
+                const width = parseFloat(fill.style.width);
+                if (!isNaN(width) && width < 15) {
+                    fill.classList.add('too-small');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
